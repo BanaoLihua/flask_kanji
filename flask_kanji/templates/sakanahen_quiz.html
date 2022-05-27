@@ -1,0 +1,275 @@
+{% extends 'layout.html' %}
+{% block body %} 
+<body>
+  <main role="main">
+    <div id="quiz">
+      <p id="kanji"></p>
+      <div>
+        <input type="text" id="kaitou"><br>
+        <a id="next" class="btn2">Enter</a>
+      </div>
+    </div>
+    <div style="display:none;" id="score">
+      <p id="text_score">あなたの得点は・・・</p>
+      <div id="your_score_outer">
+        <p id="your_score"></p>
+      </div>
+    </div>
+    <div style="display:none;" id="result">
+      <table class="table table-striped table-bordered mx-auto">
+        <thead class="table-dark">
+          <tr>
+            <th>問題</th>
+            <th>正答</th>
+            <th>回答</th>
+            <th>正誤</th>
+          </tr>
+        </thead>
+        <tbody id="result_list">
+        </tbody>
+      </table>
+    </div>
+    <div id="buttons">
+      <a id="detail" class="btn2">詳細画面へ</a>
+      <a href="{{url_for('top')}}" class="btn2">トップへ</a>
+      {% if level == 'easy' %}
+      <a href="{{url_for('sakanahen_quiz', level='easy')}}" class="btn2">もう一度</a>
+      {% endif %}
+      {% if level == 'normal' %}
+      <a href="{{url_for('sakanahen_quiz', level='normal')}}" class="btn2">もう一度</a>
+      {% endif %}
+      {% if level == 'hard' %}
+      <a href="{{url_for('sakanahen_quiz', level='hard')}}" class="btn2">もう一度</a>
+      {% endif %}
+      <a href="{{url_for('sakanahen_top')}}" class="btn2">難易度選択へ</a>
+    </div>
+  </main>
+</body>
+
+<style>
+  main {
+    font-family: "HG正楷書体-PRO";
+  }
+  #quiz {
+    text-align: center;
+  }
+  #kanji {
+    font-size: 200px;
+    margin-bottom: 0;
+  }
+  #kaitou {
+    border: none;
+    border-bottom: 2px solid gray;
+    font-size: 50px;
+    text-align: center;
+  }
+  #kaitou:focus {
+    outline: none;
+  }
+  @media screen and (max-width: 800px) {
+    #kanji {
+      font-size:  100px;
+      margin-bottom: 0;
+      font-family: "ＭＳ 明朝"
+    }
+    #kaitou {
+      border: none;
+      border-bottom: 2px solid gray;
+      font-size: 25px;
+      text-align: center;
+      font-family: "ＭＳ 明朝"
+    }
+  }
+  .btn2 {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.5;
+      position: relative;
+      display: inline-block;
+      padding: 10px 30px;
+      margin: 30px;
+      cursor: pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-transition: all 0.3s;
+      transition: all 0.3s;
+      text-align: center;
+      vertical-align: middle;
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      color: white;
+      border-radius: 0.5rem;
+      color: black;
+      background-color: white;
+      border: 2px solid black;
+  }
+  .btn2:active {
+    position: relative;
+    top: 1px;
+    color: black;
+    background: white;
+    border: 2px solid black;
+  }
+  .btn2:hover {
+    color: black;
+  }
+  #result {
+    text-align: center;
+  }
+  table {
+    width: 50% !important;
+    font-size: 20px;
+  }
+  @media screen and (max-width: 800px) {
+    table {
+      width: 100% !important;
+      font-size: 20px;
+    }
+  }
+  #score {
+    text-align: center;
+  }
+  #your_score_outer {
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #text_score {
+    font-size: 40px;
+  }
+  #your_score {
+    font-size: 70px;
+  }
+  #result {
+    display: none;
+    margin: 30px 10px;
+  }
+  #buttons {
+    display: none;
+    text-align: center;
+  }
+</style>
+
+  <script>
+
+    // 漢字、読み、回答のリスト
+    const kanji_list = [];
+    const yomi_list = [];
+    const kaitou_list = [];
+    const seigo_list = [];
+
+    // 正解数
+    let cnt = 0;
+
+    // 漢字、読みを取得
+    {% for sakanahen in data %}
+    kanji_list.push('{{sakanahen.kanji.strip()}}');
+    yomi_list.push('{{sakanahen.yomi.strip()}}');
+    {% endfor %}
+
+    // DOM取得
+    const el_kanji = document.getElementById("kanji");
+    const el_kaitou = document.getElementById("kaitou");
+    const el_quiz = document.getElementById("quiz");
+    const el_score = document.getElementById("score");
+    const el_text_score = document.getElementById("text_score");
+    const el_your_score = document.getElementById("your_score");
+    const el_result_list = document.getElementById("result_list");
+    const el_next = document.getElementById("next");
+    const el_buttons = document.getElementById("buttons");
+    const el_detail = document.getElementById("detail");
+    const el_result = document.getElementById("result");
+
+    // next押下時
+    const clickNext = () => {
+      kaitou_list.push(el_kaitou.value);
+      seigo_list.push(checkAnswer(yomi_list[cnt], kaitou_list[cnt]));
+      console.log(seigo_list);
+      cnt ++;
+      el_kanji.innerHTML = kanji_list[cnt];
+      el_kanji.animate([{opacity: '0'}, {opacity: '1'}], 1500);
+      el_kaitou.value = '';
+      el_kaitou.focus();
+      if(cnt >= kanji_list.length) {
+        display_result();
+      }
+    }
+ 
+    // 結果画面遷移
+    const display_result = () => {
+      score = 0;
+      for(seigo of seigo_list) {
+        if(seigo) {
+          score += 10;
+        }
+      }
+      el_your_score.innerHTML = score + "点"
+      el_quiz.remove();
+      el_score.style.display = "block";
+      el_buttons.style.display = "block";
+      el_text_score.animate([{opacity: '0'}, {opacity: '1'}], 1000);
+      el_your_score.style.opacity = 0;
+      setTimeout(() => {
+        el_your_score.animate([{opacity: '0'}, {opacity: '1'}], 1000);
+        el_your_score.style.opacity = 1;
+      }, 1500);
+      for(num in kanji_list){
+        const tr = document.createElement("tr");
+        const td_kanji = document.createElement("td");
+        const td_yomi = document.createElement("td");
+        const td_kaitou = document.createElement("td");
+        const td_seigo = document.createElement("td");
+        result_list.appendChild(tr).appendChild(td_kanji).innerHTML = kanji_list[num];
+        result_list.appendChild(tr).appendChild(td_yomi).innerHTML = yomi_list[num];
+        result_list.appendChild(tr).appendChild(td_kaitou).innerHTML = kaitou_list[num];
+        result_list.appendChild(tr).appendChild(td_seigo).innerHTML = seigo_list[num] ? "○" : "×";
+      }
+    }
+
+    // 問題の漢字を表示
+    el_kanji.innerHTML = kanji_list[cnt];
+
+    // 回答欄をフォーカス
+    el_kaitou.focus();
+
+    // Enterボタンのイベント発火
+    el_next.addEventListener("click", clickNext);
+
+    // EnterキークリックでEnterボタンに対応
+    window.document.onkeydown = e => {
+      if(e.key === "Enter") {
+        el_next.click();
+      }
+    }
+
+    // 漢字の表示のアニメーション（古いブラウザには未対応）
+    el_kanji.animate([{opacity: '0'}, {opacity: '1'}], 1500);
+
+    // 結果画面での得点表示か詳細表示か
+    let isResult = false;
+    el_detail.addEventListener('click', () => {
+      if(isResult) {
+        el_score.style.display = "block";
+        el_result.style.display = "none";
+        el_detail.innerHTML = "詳細画面へ"
+      } else {
+        el_score.style.display = "none";
+        el_result.style.display = "block";
+        el_detail.innerHTML = "得点画面へ"
+      }
+      isResult = !isResult;
+    })
+
+    // 正誤判定
+    const checkAnswer = (yomi, kaitou) => {
+      yomi_array = yomi.split('、');
+      console.log(yomi_array);
+      return yomi_array.includes(kaitou);
+    }
+
+  </script>
+
+{% endblock %}

@@ -1,0 +1,1 @@
+copy sakanahen2 from 'C:\Users\xxxx\Desktop\sakanahen.csv' with csv header

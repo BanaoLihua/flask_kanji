@@ -1,0 +1,65 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<body>
+  <main role="main">
+    <h1 class="mt-5">難易度選択</h1>
+    <div>
+      <div>
+        <a href="{{url_for('sakanahen_quiz', level='easy')}}" class="btn2">簡単</a>
+      </div>
+      <div>
+        <a href="{{url_for('sakanahen_quiz', level='normal')}}" class="btn2">普通</a>
+      </div>
+      <div>
+        <a href="{{url_for('sakanahen_quiz', level='hard')}}" class="btn2">困難</a>
+      </div>
+    </div>
+  </main>
+</body>
+
+<style>
+  main {
+    text-align: center;
+    font-family: "HG正楷書体-PRO";
+  }
+  .btn2 {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.5;
+      position: relative;
+      display: inline-block;
+      padding: 10px 30px;
+      margin: 30px;
+      width: 200px;
+      cursor: pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-transition: all 0.3s;
+      transition: all 0.3s;
+      text-align: center;
+      vertical-align: middle;
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      color: white;
+      border-radius: 0.5rem;
+      color: black;
+      background-color: white;
+      border: 2px solid black;
+    }
+    .btn2:active {
+      position: relative;
+      top: 1px;
+      color: black;
+      background: white;
+      border: 2px solid black;
+    }
+    .btn2:hover {
+      color: black;
+    }
+</style>
+
+{% endblock %}
+  
