@@ -1,7 +1,7 @@
 from flask_kanji import db
 
 class Sakanahen(db.Model):
-    __tablename__ = 'sakanahen'
+    __tablename__ = 'sakanahen3'
     kanji = db.Column(db.String(4), primary_key=True)
     yomi = db.Column(db.String(32))
     level = db.Column(db.Integer)
