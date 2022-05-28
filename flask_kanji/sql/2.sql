@@ -1,1 +1,1 @@
-copy sakanahen2 from 'C:\Users\xxxx\Desktop\sakanahen.csv' with csv header
+copy sakanahen3 from 'C:\Users\hobby\Desktop\study\quiz\flask_kanji\sakanahen.csv' with csv header
