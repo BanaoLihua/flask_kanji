@@ -1,11 +1,17 @@
-from flask import jsonify, request, redirect, url_for, render_template, flash, session
+from ipaddress import ip_address
+from flask import jsonify, request, redirect, url_for, render_template, flash, session, request
 from flask_kanji import app
 from flask_kanji.models.sakanahen import Sakanahen
+from flask_kanji.models.ipaddress import Ipaddress
 from sqlalchemy.sql.expression import func
+from flask_kanji import db
 
 
 @app.route('/')
 def top():
+    ipaddr = Ipaddress(request.remote_addr)
+    db.session.add(ipaddr)
+    db.session.commit()
     return render_template('index.html')
 
 
