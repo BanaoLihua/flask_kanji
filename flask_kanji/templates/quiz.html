@@ -32,16 +32,16 @@
     <div id="buttons">
       <a id="detail" class="btn2">詳細画面へ</a>
       <a href="{{url_for('top')}}" class="btn2">トップへ</a>
-      {% if level == 'easy' %}
-      <a href="{{url_for('sakanahen_quiz', level='easy')}}" class="btn2">もう一度</a>
+      {% if level == '1' %}
+      <a href="{{url_for('quiz', level=level, type=type)}}" class="btn2">もう一度</a>
       {% endif %}
-      {% if level == 'normal' %}
-      <a href="{{url_for('sakanahen_quiz', level='normal')}}" class="btn2">もう一度</a>
+      {% if level == '2' %}
+      <a href="{{url_for('quiz', level=level, type=type)}}" class="btn2">もう一度</a>
       {% endif %}
-      {% if level == 'hard' %}
-      <a href="{{url_for('sakanahen_quiz', level='hard')}}" class="btn2">もう一度</a>
+      {% if level == '3' %}
+      <a href="{{url_for('quiz', level=level, type=type)}}" class="btn2">もう一度</a>
       {% endif %}
-      <a href="{{url_for('sakanahen_top')}}" class="btn2">難易度選択へ</a>
+      <a href="{{url_for('select_mode', type=type)}}" class="btn2">難易度選択へ</a>
     </div>
   </main>
 </body>
@@ -165,9 +165,9 @@
     let cnt = 0;
 
     // 漢字、読みを取得
-    {% for sakanahen in data %}
-    kanji_list.push('{{sakanahen.kanji.strip()}}');
-    yomi_list.push('{{sakanahen.yomi.strip()}}');
+    {% for record in data %}
+    kanji_list.push('{{record.kanji.strip()}}');
+    yomi_list.push('{{record.yomi.strip()}}');
     {% endfor %}
 
     // DOM取得

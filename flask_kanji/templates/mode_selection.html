@@ -6,13 +6,13 @@
     <h1 class="mt-5">難易度選択</h1>
     <div>
       <div>
-        <a href="{{url_for('sakanahen_quiz', level='easy')}}" class="btn2">簡単</a>
+        <a href="{{url_for('quiz', level=1, type=type)}}" class="btn2">簡単</a>
       </div>
       <div>
-        <a href="{{url_for('sakanahen_quiz', level='normal')}}" class="btn2">普通</a>
+        <a href="{{url_for('quiz', level=2, type=type)}}" class="btn2">普通</a>
       </div>
       <div>
-        <a href="{{url_for('sakanahen_quiz', level='hard')}}" class="btn2">困難</a>
+        <a href="{{url_for('quiz', level=3, type=type)}}" class="btn2">困難</a>
       </div>
     </div>
   </main>

@@ -4,29 +4,37 @@
     <main role="main">
       <div class="container marketing" style="text-align: center">
         <div class="row">
-          <div class="col-lg-3 mt-5">
+          <div class="col-lg-4 mt-5">
             <img class="rounded-circle" src="{{ url_for('static', filename='sakana.PNG') }}" alt="Generic placeholder image" width="140" height="140">
-            <h2>さかなへんクイズ</h2>
+            <h2>さかなへん</h2>
             <p>収録問題数：114問</p>
-            <p><a class="btn btn-secondary" href="sakanahen" role="button">難易度選択へ &raquo;</a></p>
+            <p><a class="btn btn-secondary" href="{{ url_for('select_mode', type='sakana') }}" role="button">難易度選択へ &raquo;</a></p>
           </div>
-          <div class="col-lg-3 mt-5">
-            <img class="rounded-circle" src="{{ url_for('static', filename='hai.PNG') }}" alt="Generic placeholder image" width="140" height="140">
-            <h2>Element2</h2>
-            <p>ほげほげほげほげほげほげほげほげほげほげほげ</p>
-            <p><a class="btn btn-secondary" href="#" role="button">hogehoge &raquo;</a></p>
+          <div class="col-lg-4 mt-5">
+            <img class="rounded-circle" src="{{ url_for('static', filename='tori.PNG') }}" alt="Generic placeholder image" width="140" height="140">
+            <h2>とり</h2>
+            <p>収録問題数：95問</p>
+            <p><a class="btn btn-secondary" href="{{url_for('select_mode', type='tori')}}" role="button">難易度選択へ &raquo;</a></p>
           </div>
-          <div class="col-lg-3 mt-5">
-            <img class="rounded-circle" src="{{ url_for('static', filename='hai.PNG') }}" alt="Generic placeholder image" width="140" height="140">
-            <h2>Element3</h2>
-            <p>ふがふがふがふがふがふがふがふがふがふがふが</p>
-            <p><a class="btn btn-secondary" href="#" role="button">fugafuga &raquo;</a></p>
+          <div class="col-lg-4 mt-5">
+            <img class="rounded-circle" src="{{ url_for('static', filename='kemono.PNG') }}" alt="Generic placeholder image" width="140" height="140">
+            <h2>けものへん</h2>
+            <p>収録問題数：30問</p>
+            <p><a class="btn btn-secondary" href="{{ url_for('select_mode', type='kemono') }}" role="button">難易度選択へ &raquo;</a></p>
           </div>
-          <div class="col-lg-3 mt-5">
-            <img class="rounded-circle" src="{{ url_for('static', filename='hai.PNG') }}" alt="Generic placeholder image" width="140" height="140">
-            <h2>Element4</h2>
-            <p>ぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよぴよ</p>
-            <p><a class="btn btn-secondary" href="#" role="button">piyopiyo &raquo;</a></p>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 mt-5">
+            <img class="rounded-circle" src="{{ url_for('static', filename='kusa.PNG') }}" alt="Generic placeholder image" width="140" height="140">
+            <h2>くさかんむり</h2>
+            <p>収録問題数：245問</p>
+            <p><a class="btn btn-secondary" href="{{ url_for('select_mode', type='kusa') }}" role="button">難易度選択へ &raquo;</a></p>
+          </div>
+          <div class="col-lg-6 mt-5">
+            <img class="rounded-circle" src="{{ url_for('static', filename='ki.PNG') }}" alt="Generic placeholder image" width="140" height="140">
+            <h2>きへん</h2>
+            <p>収録問題数：311問</p>
+            <p><a class="btn btn-secondary" href="{{ url_for('select_mode', type='ki') }}" role="button">難易度選択へ &raquo;</a></p>
           </div>
         </div>
       </div>
